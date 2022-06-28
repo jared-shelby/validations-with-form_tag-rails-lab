@@ -1,5 +1,5 @@
-<h2>Editing "<%= @post.title %>"</h2>
-<%= form_tag post_path(@post), method: "patch" do %>
+<h2>Create a Post</h2>
+<%= form_tag posts_path, method: "post" do %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2>There were some errors:</h2>
@@ -26,10 +26,15 @@
     </p>
   </div>
 
-  <div class="field<%= ' field_with_errors' if @post.errors[:content].any? %>">
-    <%= label_tag "content", "Content" %>
-    <br />
-    <%= text_area_tag "content", @post.content %>
-  </div>
-  <%= submit_tag "Update" %>
+# not sure why my own code (which is the same format as above/everywhere else & passes the tests fine) won't work here. assuming its a capybara problem lol
+    <% if @post.errors[:content].empty? %>
+        <div class="field">
+    <% else %>
+        <div class="field_with_errors">
+    <% end %>
+        <%= label_tag "content", "Content" %>
+        <%= text_field_tag "content", @post.content %>
+    </div>
+  
+  <%= submit_tag "Create" %>
 <% end %>
